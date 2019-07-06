@@ -10,9 +10,9 @@ import (
 )
 
 type Btree struct {
-	Left  *Btree
-	Value int
-	Right *Btree
+	Right *Btree `json:"right/,omitempty"`
+	Value int `json:"["`
+	Left  *Btree `json:"left-_,omitempty"`
 }
 
 func init() {

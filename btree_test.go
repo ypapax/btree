@@ -10,27 +10,20 @@ func TestAdd(t *testing.T) {
 	as := assert.New(t)
 	tree := New(7).Add(5).Add(8).Add(3).Add(1).Add(10)
 	expStr := `{
-           "Left": {
-              "Left": {
-                 "Left": {
-                    "Left": null,
-                    "Value": 1,
-                    "Right": null
-                 },
-                 "Value": 3,
-                 "Right": null
+           "right/": {
+              "right/": {
+                 "[": 10
               },
-              "Value": 5,
-              "Right": null
+              "[": 8
            },
-           "Value": 7,
-           "Right": {
-              "Left": null,
-              "Value": 8,
-              "Right": {
-                 "Left": null,
-                 "Value": 10,
-                 "Right": null
+           "[": 7,
+           "left-_": {
+              "[": 5,
+              "left-_": {
+                 "[": 3,
+                 "left-_": {
+                    "[": 1
+                 }
               }
            }
         }`
