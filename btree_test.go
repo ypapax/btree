@@ -17,6 +17,12 @@ func TestPrint(t *testing.T) {
 	//log.Println(tree.String())
 }
 
+func TestCreate(t *testing.T) {
+	tree := Create(19, 7, 28, 93, 31, 80, 73, 90, 38)
+	tree.Print()
+	//log.Println(tree.String())
+}
+
 func TestAdd(t *testing.T) {
 	as := assert.New(t)
 	tree := New(7).Add(5).Add(8).Add(3).Add(1).Add(10).Add(10)

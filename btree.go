@@ -6,6 +6,7 @@ import (
 	"log"
 	"math"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/ypapax/jsn"
@@ -33,6 +34,17 @@ func Random(nodes, maxVal int) *Btree {
 		root.Add(val)
 	}
 	return root
+}
+
+func Create(vals ...int) *Btree {
+	if len(vals) == 0 {
+		return nil
+	}
+	b := New(vals[0])
+	for _, v := range vals[1:] {
+		b.Add(v)
+	}
+	return b
 }
 
 func (bt *Btree) Add(val int) *Btree {
@@ -85,16 +97,33 @@ func (bt *Btree) Print() {
 
 func PrintMatrix(result [][]string) {
 	var maxWidth int
+	firstLeftNotEmptyColumn := -1
+	lastRightNotEmptyColumn := -1
+	log.Println("len(result)", len(result))
 	for _, row := range result {
-		for _, el := range row {
+		log.Println("len(row)", len(row))
+		for j, el := range row {
+			if len(strings.TrimSpace(el)) > 0 && (j < firstLeftNotEmptyColumn || firstLeftNotEmptyColumn < 0) {
+				firstLeftNotEmptyColumn = j
+			}
+			if len(strings.TrimSpace(el)) > 0 && j > lastRightNotEmptyColumn {
+				lastRightNotEmptyColumn = j
+			}
 			if len(el) > maxWidth {
 				maxWidth = len(el)
 			}
 		}
 	}
+	log.Println("firstLeftNotEmptyColumn", firstLeftNotEmptyColumn)
 	for _, row := range result {
 		var line string
-		for _, el := range row {
+		for j, el := range row {
+			if j < firstLeftNotEmptyColumn {
+				continue
+			}
+			if j > lastRightNotEmptyColumn {
+				continue
+			}
 			elSpace := addSpaces(maxWidth, el)
 			line += elSpace
 		}
@@ -106,7 +135,7 @@ const spaceChar = " "
 func addSpaces(maxWidth int, el string) string {
 	spaceLenLeft := maxWidth - len(el)
 	var space string
-	for i := 0; i < spaceLenLeft/2; i++ {
+	for i := 0; i < spaceLenLeft; i++ {
 		space += spaceChar
 	}
 	return space + el + space
