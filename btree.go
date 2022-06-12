@@ -125,20 +125,22 @@ func PrintMatrix(result [][]string) {
 				continue
 			}
 			elSpace := addSpaces(maxWidth, el)
-			line += elSpace
+			line += "_"+elSpace
 		}
 		//log.Println("len(line): ", len(line), "len(row)", len(row), "len(result)", len(result))
 		log.Println(line)
 	}
 }
-const spaceChar = " "
+const spaceChar = "."
 func addSpaces(maxWidth int, el string) string {
+	//log.Println("maxWidth", maxWidth)
 	spaceLenLeft := maxWidth - len(el)
 	var space string
+	//for i := 0; i < int(math.Ceil(float64(spaceLenLeft)/2)); i++ {
 	for i := 0; i < spaceLenLeft; i++ {
 		space += spaceChar
 	}
-	return space + el + space
+	return space + el
 }
 
 func (bt *Btree) GetPrintMatrix() (result [][]string) {
