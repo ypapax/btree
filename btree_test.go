@@ -1,6 +1,7 @@
 package btree
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -49,6 +50,46 @@ func TestAdd(t *testing.T) {
 		return
 	}
 	tree.Print()
-	t.Log(tree.String())
+	//t.Log(tree.String())
 	as.Equal(expTree, tree)
+}
+
+
+func TestValidate(t *testing.T) {
+	type testCase struct{
+		expectedValid bool
+		tree Btree
+	}
+	as0 := assert.New(t)
+	notValid := *Create(1,3,89,9,3989,78,909, 22323)
+	node909 := notValid.Contains(909)
+	node9 := notValid.Contains(9)
+	//node909.Left = &Btree{Value: 908}
+	if !as0.NotNil(node909) {
+		return
+	}
+	if !as0.NotNil(node9) {
+		return
+	}
+	node9.Left = node909
+
+	cases := []testCase{
+		//{false, Btree{Value: 10, Right: &Btree{Value: 6}}},
+		//{true, Btree{Value: 10, Left: &Btree{Value: 6}}},
+		//{false, Btree{Value: 6, Left: &Btree{Value: 10}}},
+		//{true, *Create(1,3,89,9,3989,9)},
+		//{false, Btree{Value: 10, Left: &Btree{Value: 6, Left: &Btree{Value: 10}}}},
+		{false, notValid},
+	}
+	for i, c := range cases {
+		t.Run(fmt.Sprintf("%+v", i), func(t *testing.T) {
+			as := assert.New(t)
+			if !as.Equal(c.expectedValid, c.tree.Validate()) {
+				c.tree.Print()
+				return
+			}
+		})
+
+	}
+
 }

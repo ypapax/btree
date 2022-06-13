@@ -8,8 +8,6 @@ import (
 	"math/rand"
 	"strings"
 	"time"
-
-	"github.com/ypapax/jsn"
 )
 
 type Btree struct {
@@ -67,9 +65,26 @@ func (bt *Btree) Add(val int) *Btree {
 	return bt
 }
 
-func (bt *Btree) String() string {
-	return jsn.B(bt)
+func (bt *Btree) Contains(val int) *Btree {
+	if bt.Value == val {
+		return bt
+	}
+	if val <= bt.Value {
+		if bt.Left == nil {
+			return nil
+		}
+		return bt.Left.Contains(val)
+	}
+	if bt.Right == nil {
+		return nil
+	}
+
+	return bt.Right.Contains(val)
 }
+
+//func (bt *Btree) String() string {
+//	return jsn.B(bt)
+//}
 
 func Parse(str string) (*Btree, error) {
 	var tree Btree
@@ -99,9 +114,9 @@ func PrintMatrix(result [][]string) {
 	var maxWidth int
 	firstLeftNotEmptyColumn := -1
 	lastRightNotEmptyColumn := -1
-	log.Println("len(result)", len(result))
+	//log.Println("len(result)", len(result))
 	for _, row := range result {
-		log.Println("len(row)", len(row))
+		//log.Println("len(row)", len(row))
 		for j, el := range row {
 			if len(strings.TrimSpace(el)) > 0 && (j < firstLeftNotEmptyColumn || firstLeftNotEmptyColumn < 0) {
 				firstLeftNotEmptyColumn = j
@@ -114,7 +129,7 @@ func PrintMatrix(result [][]string) {
 			}
 		}
 	}
-	log.Println("firstLeftNotEmptyColumn", firstLeftNotEmptyColumn)
+	//log.Println("firstLeftNotEmptyColumn", firstLeftNotEmptyColumn)
 	for _, row := range result {
 		var line string
 		for j, el := range row {
@@ -187,9 +202,9 @@ func (bt *Btree) GetPrintMatrix() (result [][]string) {
 		}
 	}
 	maxElementsOnRowIncludingSpace := maxElementsOnRow * 2
-	log.Println("maxElementsOnRow", maxElementsOnRow)
+	//log.Println("maxElementsOnRow", maxElementsOnRow)
 	maxElOnTheRow := 1
-	log.Println("maxLevel", maxLevel)
+	//log.Println("maxLevel", maxLevel)
 	result = make([][]string, maxLevel+1)
 	headColumn := maxElementsOnRowIncludingSpace / 2
 	for level := 0; level <= maxLevel; level++ {
@@ -198,7 +213,7 @@ func (bt *Btree) GetPrintMatrix() (result [][]string) {
 		els := byLevel[level]
 		spaceFloat := float64(maxElementsOnRow- maxElOnTheRow)/2
 		space := /*centerColumn+*/int(math.Round(spaceFloat))
-		log.Println("space", space, "els", len(els), "maxElOnTheRow", maxElOnTheRow, "spaceFloat", spaceFloat)
+		//log.Println("space", space, "els", len(els), "maxElOnTheRow", maxElOnTheRow, "spaceFloat", spaceFloat)
 		var spaceLeft string
 		for i := 0; i < space; i++ {
 			spaceLeft += " "
