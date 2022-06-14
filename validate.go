@@ -2,7 +2,35 @@ package btree
 
 import "log"
 
+
+func (bt *Btree) ValidateMinMax(min, max int) bool {
+	if bt.Left != nil {
+		if bt.Left.Value >= max {
+			return false
+		}
+		if !bt.Left.ValidateMinMax(bt.Left.Value, max) {
+			return false
+		}
+	}
+	if bt.Right != nil {
+		if bt.Right.Value <= min {
+			return false
+		}
+		if !bt.Right.ValidateMinMax(min, bt.Right.Value) {
+			return false
+		}
+	}
+	return true
+}
+
 func (bt *Btree) Validate() bool {
+	if bt == nil {
+		return false
+	}
+	return bt.ValidateMinMax(bt.Value, bt.Value)
+}
+
+func (bt *Btree) Validate0() bool {
 	var arr = []*Btree{bt}
 	dupl := make(map[int]struct{})
 	for {

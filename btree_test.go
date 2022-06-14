@@ -74,11 +74,11 @@ func TestValidate(t *testing.T) {
 	node9.Left = node909
 
 	cases := []testCase{
-		//{false, Btree{Value: 10, Right: &Btree{Value: 6}}},
-		//{true, Btree{Value: 10, Left: &Btree{Value: 6}}},
-		//{false, Btree{Value: 6, Left: &Btree{Value: 10}}},
-		//{true, *Create(1,3,89,9,3989,9)},
-		//{false, Btree{Value: 10, Left: &Btree{Value: 6, Left: &Btree{Value: 10}}}},
+		{false, Btree{Value: 10, Right: &Btree{Value: 6}}},
+		{true, Btree{Value: 10, Left: &Btree{Value: 6}}},
+		{false, Btree{Value: 6, Left: &Btree{Value: 10}}},
+		{true, *Create(1,3,89,9,3989,9)},
+		{false, Btree{Value: 10, Left: &Btree{Value: 6, Left: &Btree{Value: 10}}}},
 		{false, notValid},
 	}
 	for i, c := range cases {
