@@ -81,6 +81,12 @@ func TestValidate(t *testing.T) {
 		{false, Btree{Value: 10, Left: &Btree{Value: 6, Left: &Btree{Value: 10}}}},
 		{false, notValid},
 	}
+
+	for j := 0; j <= 10; j++ {
+		n := Random(100, 10000)
+		//n.Print()
+		cases = append(cases, testCase{tree: *n, expectedValid: true})
+	}
 	for i, c := range cases {
 		t.Run(fmt.Sprintf("%+v", i), func(t *testing.T) {
 			as := assert.New(t)
