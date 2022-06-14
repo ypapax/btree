@@ -25,7 +25,7 @@ func (bt *Btree) ValidateMinMax(min, max int) bool {
 
 func (bt *Btree) Validate() bool {
 	if bt == nil {
-		return false
+		return true
 	}
 	return bt.ValidateMinMax(bt.Value, bt.Value)
 }
